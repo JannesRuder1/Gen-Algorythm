@@ -1,6 +1,30 @@
 import random
 import numpy as np
 
+
+def generate_individual(person1, person2):
+    # Generate a random individual by concatenating two random permutations
+    individual1 = random.sample(person1, len(person1))
+    individual2 = random.sample(person2, len(person2))
+    return individual1 + individual2
+
+def mutate_individual(individual):
+    # Mutate an individual by swapping two random elements within each part
+    i, j = random.sample(range(len(individual)//2), 2)
+    individual[i], individual[j] = individual[j], individual[i]
+    i, j = random.sample(range(len(individual)//2, len(individual)), 2)
+    individual[i], individual[j] = individual[j], individual[i]
+    return individual
+
+def crossover(parent1, parent2):
+    # Perform crossover (recombination) between two parents
+    crossover_point1 = random.randint(1, len(parent1)//2 - 1)
+    crossover_point2 = random.randint(1, len(parent2)//2 - 1)
+    offspring1 = parent1[:crossover_point1] + parent2[crossover_point1:crossover_point1+len(parent1)//2] + parent1[crossover_point1+len(parent1)//2:]
+    offspring2 = parent2[:crossover_point2] + parent1[crossover_point2:crossover_point2+len(parent2)//2] + parent2[crossover_point2+len(parent2)//2:]
+    return offspring1, offspring2
+
+
 def fitness(individual, person1, person2, safety_distance, process_duration):
     # Calculate the safety distance for each position
     safety_distances = [individual[i] - individual[i-1] for i in range(1, len(individual))]
@@ -31,28 +55,6 @@ def fitness(individual, person1, person2, safety_distance, process_duration):
         return total_processing_time
     else:
        return("test")
-        
-def generate_individual(person1, person2):
-    # Generate a random individual by concatenating two random permutations
-    individual1 = random.sample(person1, len(person1))
-    individual2 = random.sample(person2, len(person2))
-    return individual1 + individual2
-
-def mutate_individual(individual):
-    # Mutate an individual by swapping two random elements within each part
-    i, j = random.sample(range(len(individual)//2), 2)
-    individual[i], individual[j] = individual[j], individual[i]
-    i, j = random.sample(range(len(individual)//2, len(individual)), 2)
-    individual[i], individual[j] = individual[j], individual[i]
-    return individual
-
-def crossover(parent1, parent2):
-    # Perform crossover (recombination) between two parents
-    crossover_point1 = random.randint(1, len(parent1)//2 - 1)
-    crossover_point2 = random.randint(1, len(parent2)//2 - 1)
-    offspring1 = parent1[:crossover_point1] + parent2[crossover_point1:crossover_point1+len(parent1)//2] + parent1[crossover_point1+len(parent1)//2:]
-    offspring2 = parent2[:crossover_point2] + parent1[crossover_point2:crossover_point2+len(parent2)//2] + parent2[crossover_point2+len(parent2)//2:]
-    return offspring1, offspring2
 
 def genetic_algorithm(person1, person2, safety_distance, process_duration, population_size=1000, generations=1000):
     # Run the genetic algorithm
