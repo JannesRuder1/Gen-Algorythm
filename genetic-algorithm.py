@@ -33,8 +33,10 @@ def fitness(individual, person1, person2, safety_distance, process_duration):
     if all(distance >= safety_distance for distance in safety_distances):
         travel_time = 5  # example travel time
         processing_times = [10, 20, 30, 40, 50, 60]  # example processing times
-        output = [3, 6, 1, 6, 1, 6]  # task sequence
-        robot_assignment = [1, 1, 1, 2, 2, 1]  # robot assignment for each task
+
+
+        output = fittest_individual[:len(person1)]  # task sequence
+        robot_assignment = fittest_individual[len(person1):]  # robot assignment for each task
 
         total_time_robot1 = 0
         total_time_robot2 = 0
