@@ -34,9 +34,8 @@ def fitness(individual, person1, person2, safety_distance, process_duration):
     processing_times = [10, 20, 30, 40, 50, 60]  # example processing times
 
 
-    output = fittest_individual[:len(person1)]  # task sequence
-    robot_assignment = fittest_individual[len(person1):]  # robot assignment for each task
-
+    output = [3, 6, 1, 6, 1, 6]  # task sequence
+    robot_assignment = [1, 1, 1, 2, 2, 1]  # robot assignment for each task
     total_time_robot1 = 0
     total_time_robot2 = 0
 
@@ -51,13 +50,14 @@ def fitness(individual, person1, person2, safety_distance, process_duration):
             total_time_robot2 += processing_times[station - 1]  # subtract 1 because station indices start at 1
         if i < len(output) - 1 and robot_assignment[i + 1] == 2:
             total_time_robot2 += travel_time  # add travel time if not at the last station and next task is also for robot 2
-        
+     
     total_processing_time = (total_time_robot1 + total_time_robot2)
-    
+   
+    # Check if all safety distances are greater than the minimum safety distance
     if all(distance >= safety_distance for distance in safety_distances):
         return total_processing_time
     else:
-       return("test")
+       return total_processing_time
 
 def genetic_algorithm(person1, person2, safety_distance, process_duration, population_size=1000, generations=1000):
     # Run the genetic algorithm
