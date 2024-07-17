@@ -1,93 +1,79 @@
-# jannes_ga_projekt
+# Checkliste fÃ¼r die Anwendungsklasse 1 (Markdown-Template)
 
+## Nutzungshinweise
+Diese Checkliste liefert Empfehlungen zur Software-Entwicklung. PrimÃ¤r richten sich diese an Software-Entwickler zur SelbsteinschÃ¤tzung entwickelter Software und als Ideengeber fÃ¼r die weitere Entwicklung. Die Checkliste liefert keine neuen, revolutionÃ¤ren AnsÃ¤tze zur Software-Entwicklung. Sie hilft aber notwendige, wesentliche Schritte der Software-Entwicklung nicht zu vergessen. Zudem kÃ¶nnen die Empfehlungen als Argumentationshilfe dienen.
 
+Die Empfehlungen sind mit Fokus auf Wissenserhalt und gute Software-Engineering-Praxis erstellt. Sie unterstÃ¼tzen dabei, die Nachvollziehbarkeit und Nachhaltigkeit entwickelter Software zu erhalten. Die Empfehlungen motivieren den Einsatz von Tools, die Erstellung von Dokumentation, die Etablierung von Prozessen oder die Einhaltung von Prinzipien. Bei der Bewertung einer Empfehlung empfiehlt es sich daher zu Ã¼berlegen, inwieweit der genannte Aspekt umgesetzt ist und ob Verbesserungsbedarf besteht. Dies kann man beispielsweise wie folgt umsetzen:
 
-## Getting started
+* Gibt es derzeit keinen Verbesserungsbedarf und die Empfehlung ist prinzipiell passend adressiert? Status: **ok**
+* Gibt es Verbesserungspotential, welches in nÃ¤chster Zeit umgesetzt werden kann bzw. sollte? Status: **todo**, Verbesserungsbedarf unter Bemerkungen festhalten
+* Ist die Empfehlung derzeit noch nicht relevant, kÃ¶nnte aber in einer spÃ¤teren Entwicklungsphase hilfreich sein? Status: **future**
+* Ist die Empfehlung im Entwicklungskontext nicht sinnvoll umsetzbar? Status: **n.a.** (not applicable, nicht zutreffend), Grund unter Bemerkungen erlÃ¤utern
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+> Den Status zwischen `**[]**` vermerken. Die Bemerkungen unterhalb der Empfehlung als Liste (z.B. `* Repository einrichten`) erfassen.
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+## Zusammenfassung der Ergebnisse
+Die Software erreicht Anwendungsklasse [1, 2 oder 3].
 
-## Add your files
+Der Schwerpunkt zukÃ¼nftiger Verbesserungen liegt auf:
 
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
+## Inhaltsverzeichnis
+[[Qualifizierung](#qualifizierung)] [[Anforderungsmanagement](#anforderungsmanagement)] [[Software-Architektur](#software-architektur)] [[Ã„nderungsmanagement](#aenderungsmanagement)] [[Design und Implementierung](#design-implementierung)] [[Software-Test](#software-test)] [[Release-Management](#release-management)] [[Automatisierung und AbhÃ¤ngigkeitsmanagement](#automatisierung-abhaengigkeiten)] 
 
-```
-cd existing_repo
-git remote add origin https://gitlab.dlr.de/schr_mk/jannes_ga_projekt.git
-git branch -M main
-git push -uf origin main
-```
+## Qualifizierung <a name="qualifizierung"></a>
+**[]** Der Software-Verantwortliche kennt die verschiedenen Anwendungsklassen und weiÃŸ, welche fÃ¼r seine Software anzustreben ist. *(EQA.1, ab Anwendungsklasse 1)*
 
-## Integrate with your tools
+**[]** Der Software-Verantwortliche weiÃŸ, wie er gezielt UnterstÃ¼tzung zu Beginn und im Verlauf der Entwicklung anfordern und sich mit anderen Kollegen zum Thema Software-Entwicklung austauschen kann. *(EQA.2, ab Anwendungsklasse 1)*
 
-- [ ] [Set up project integrations](https://gitlab.dlr.de/schr_mk/jannes_ga_projekt/-/settings/integrations)
+**[]** Die an der Entwicklung Beteiligten ermitteln den Qualifikationsbedarf in Bezug auf ihre Rolle  und die angestrebte Anwendungsklasse. Sie kommunizieren diesen Bedarf an den Vorgesetzten. *(EQA.3, ab Anwendungsklasse 1)*
 
-## Collaborate with your team
+**[]** Den an der Entwicklung Beteiligten stehen die fÃ¼r ihre Aufgaben benÃ¶tigten Werkzeuge zur VerfÃ¼gung und sie sind geschult in deren Benutzung. *(EQA.4, ab Anwendungsklasse 1)*
 
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Set auto-merge](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
+## Anforderungsmanagement <a name="anforderungsmanagement"></a>
+**[]** Die Aufgabenstellung ist mit allen Beteiligten abgestimmt und dokumentiert. Sie beschreibt in knapper, verstÃ¤ndlicher Form die Ziele, den Zweck der Software, die wesentlichen Anforderungen und die angestrebte Anwendungsklasse. *(EAM.1, ab Anwendungsklasse 1)*
 
-## Test and Deploy
+**[]** Die Randbedingungen sind erfasst. *(EAM.3, ab Anwendungsklasse 1)*
 
-Use the built-in continuous integration in GitLab.
+## Software-Architektur <a name="software-architektur"></a>
+**[]** Wesentliche Architekturkonzepte und damit zusammenhÃ¤ngende Entscheidungen sind zumindest in knapper Form dokumentiert. *(ESA.2, ab Anwendungsklasse 1)*
 
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing (SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
+## Ã„nderungsmanagement <a name="aenderungsmanagement"></a>
+**[]** Die wichtigsten Informationen, um zur Entwicklung beitragen zu kÃ¶nnen, sind an einer zentralen Stelle abgelegt. *(EÃ„M.2, ab Anwendungsklasse 1)*
 
-***
+**[]** Bekannte Fehler, wichtige ausstehende Aufgaben und Ideen sind zumindest stichpunktartig in einer Liste festgehalten und zentral abgelegt. *(EÃ„M.5, ab Anwendungsklasse 1)*
 
-# Editing this README
+**[]** Ein Repository ist in einem Versionskontrollsystem eingerichtet. Das Repository ist angemessen strukturiert und enthÃ¤lt mÃ¶glichst alle Artefakte, die zum Erstellen einer nutzbaren Version der Software und deren Test erforderlich sind. *(EÃ„M.7, ab Anwendungsklasse 1)*
 
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thanks to [makeareadme.com](https://www.makeareadme.com/) for this template.
+**[]** Jede Ã„nderung des Repository dient mÃ¶glichst einem spezifischen Zweck, enthÃ¤lt eine verstÃ¤ndliche Beschreibung und hinterlÃ¤sst die Software mÃ¶glichst in einem konsistenten, funktionierenden Zustand. *(EÃ„M.8, ab Anwendungsklasse 1)*
 
-## Suggestions for a good README
+## Design und Implementierung <a name="design-implementierung"></a>
+**[]** Es werden die Ã¼blichen Konstrukte und LÃ¶sungsansÃ¤tze der gewÃ¤hlten Programmiersprache eingesetzt sowie ein Regelsatz hinsichtlich des Programmierstils konsequent angewendet. Der Regelsatz bezieht sich zumindest auf die Formatierung und Kommentierung. *(EDI.1, ab Anwendungsklasse 1)*
 
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
+**[]** Die Software ist mÃ¶glichst modular strukturiert. Die Module sind lose gekoppelt, d.h., ein einzelnes Modul hÃ¤ngt mÃ¶glichst gering von anderen Modulen ab. *(EDI.2, ab Anwendungsklasse 1)*
 
-## Name
-Choose a self-explaining name for your project.
+**[]** Im Quelltext und in den Kommentaren sind mÃ¶glichst wenig duplizierte Informationen enthalten. (â€žDon`t repeat yourself.â€œ) *(EDI.9, ab Anwendungsklasse 1)*
 
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
+**[]** Es werden einfache, verstÃ¤ndliche LÃ¶sungen bevorzugt eingesetzt.  (â€žKeep it simple and stupid.â€œ). *(EDI.10, ab Anwendungsklasse 1)*
 
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
+## Software-Test <a name="software-test"></a>
+**[]** Die grundlegenden Funktionen und Eigenschaften der Software werden in einer mÃ¶glichst betriebsnahen Umgebung getestet. *(EST.4, ab Anwendungsklasse 1)*
 
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
+**[]** Das Repository enthÃ¤lt mÃ¶glichst alle fÃ¼r den Test der Software erforderlichen Artefakte. *(EST.10, ab Anwendungsklasse 1)*
 
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
+## Release-Management <a name="release-management"></a>
+**[]** Jedes Release besitzt eine eindeutige Release-Nummer. Anhand der Release-Nummer lÃ¤sst sich der zugrunde liegende Softwarestand im Repository ermitteln. *(ERM.1, ab Anwendungsklasse 1)*
 
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
+**[]** Das Release-Paket enthÃ¤lt oder verweist auf die Nutzer-Dokumentation. Sie besteht zumindest aus Installations-, Nutzungs- und Kontaktinformationen sowie den Release Notes. Im Fall der Weitergabe des Release-Pakets an Dritte auÃŸerhalb des DLR, sind die Lizenzbedingungen unbedingt beizulegen. *(ERM.2, ab Anwendungsklasse 1)*
 
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
+**[]** WÃ¤hrend der Release-DurchfÃ¼hrung werden alle vorgesehenen TestaktivitÃ¤ten ausgefÃ¼hrt. *(ERM.6, ab Anwendungsklasse 1)*
 
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
+**[]** Vor der Weitergabe des Release-Pakets an Dritte auÃŸerhalb des DLR ist sicherzustellen, dass eine Lizenz festgelegt ist, die Lizenzbestimmungen verwendeter Fremdsoftware eingehalten werden und alle erforderlichen Lizenzinformationen dem Release-Paket beigelegt sind. *(ERM.9, ab Anwendungsklasse 1)*
 
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
+**[]** Vor der Weitergabe des Release-Pakets an Dritte auÃŸerhalb des DLR ist sicherzustellen, dass die Regelungen zur Exportkontrolle eingehalten werden. *(ERM.10, ab Anwendungsklasse 1)*
 
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
+## Automatisierung und AbhÃ¤ngigkeitsmanagement <a name="automatisierung-abhaengigkeiten"></a>
+**[]** Der einfache Build-Prozess lÃ¤uft grundlegend automatisiert ab und notwendige manuelle Schritte sind beschrieben. Zudem sind ausreichend Informationen zur Betriebs- und Entwicklungsumgebung vorhanden. *(EAA.1, ab Anwendungsklasse 1)*
 
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
+**[]** Die AbhÃ¤ngigkeiten zum Erstellen der Software sind zumindest mit dem Namen, der Versionsnummer, dem Zweck, den Lizenzbestimmungen und der Bezugsquelle beschrieben. *(EAA.2, ab Anwendungsklasse 1)*
 
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
-
-## License
-For open source projects, say how it is licensed.
-
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+**[]** Das Repository enthÃ¤lt mÃ¶glichst alle Bestandteile, um den Build-Prozess durchfÃ¼hren zu kÃ¶nnen. *(EAA.10, ab Anwendungsklasse 1)*

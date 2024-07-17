@@ -39,6 +39,7 @@ def fitness(individual, person1, person2, safety_distance, process_duration):
     total_time_robot1 = 0
     total_time_robot2 = 0
 
+
     for i in range(len(output)):
         station = output[i]
         robot = robot_assignment[i]
@@ -57,7 +58,7 @@ def fitness(individual, person1, person2, safety_distance, process_duration):
     if all(distance >= safety_distance for distance in safety_distances):
         return total_processing_time
     else:
-       return total_processing_time
+       return f'not save {total_processing_time} ' 
 
 def genetic_algorithm(person1, person2, safety_distance, process_duration, population_size=1000, generations=1000):
     # Run the genetic algorithm
