@@ -34,33 +34,38 @@ def fitness(individual, person1, person2, safety_distance, process_duration):
     processing_times = [10, 20, 30, 40, 50, 60]  # example processing times
 
 
-    output = [3, 6, 1, 6, 1, 6]  # task sequence
+    #output = [3, 6, 1, 6, 1, 6]  # task sequence
     robot_assignment = [1, 1, 1, 2, 2, 1]  # robot assignment for each task
+    #sum_diff1 = sum(abs(a - b) for a, b in zip(individual[:len(person1)], person1))
+    #sum_diff2 = sum(abs(a - b) for a, b in zip(individual[len(person1):], person2))
+    #offspring1, offspring2 = crossover  
+    output = (individual[:len(person1)], person1)
     total_time_robot1 = 0
     total_time_robot2 = 0
 
 
     for i in range(len(output)):
         station = output[i]
+        print (station)
         robot = robot_assignment[i]
         if robot == 1:
-            total_time_robot1 += processing_times[station - 1]  # subtract 1 because station indices start at 1
+            total_time_robot1 += processing_times[int (station) - 1]  # subtract 1 because station indices start at 1
         if i < len(output) - 1 and robot_assignment[i + 1] == 1:
                 total_time_robot1 += travel_time  # add travel time if not at the last station and next task is also for robot 1
         else:
-            total_time_robot2 += processing_times[station - 1]  # subtract 1 because station indices start at 1
-        if i < len(output) - 1 and robot_assignment[i + 1] == 2:
             total_time_robot2 += travel_time  # add travel time if not at the last station and next task is also for robot 2
-     
+    
+    #savety part
     total_processing_time = (total_time_robot1 + total_time_robot2)
-   
-    # Check if all safety distances are greater than the minimum safety distance
-    if all(distance >= safety_distance for distance in safety_distances):
-        return total_processing_time
+    if robot_assignment[i] == robot_assignment[i-1]:
+        return f'not save {total_processing_time} '
     else:
-       return f'not save {total_processing_time} ' 
+        if all(safety_distance <= sd for sd in safety_distances):
+            return total_processing_time
+        else:
+            return f'not save {total_processing_time} '
 
-def genetic_algorithm(person1, person2, safety_distance, process_duration, population_size=1000, generations=1000):
+def genetic_algorithm(person1, person2, safety_distance, process_duration, population_size=2000, generations=50000):
     # Run the genetic algorithm
     population = [generate_individual(person1, person2) for _ in range(population_size)]
     for _ in range(generations):

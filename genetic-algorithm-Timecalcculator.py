@@ -1,8 +1,8 @@
 processing_times = [10, 20, 30, 40, 50, 60]  # example processing times
 travel_time = 5  # example travel time
 
-output = [3, 6, 1, 6, 1, 6]  # task sequence
-robot_assignment = [1, 1, 1, 2, 2, 1]  # robot assignment for each task
+output = [1, 6, 2, 3, 5, 6]  # task sequence
+robot_assignment = [1, 2, 1, 1, 2, 1]  # robot assignment for each task
 
 total_time_robot1 = 0
 total_time_robot2 = 0
