@@ -37,6 +37,7 @@ def fitness(individual, person1, person2, safety_distance, process_duration):
     robot_assignment = [1, 1, 1, 2, 2, 1]  # robot assignment for each task
     #offspring1, offspring2 = crossover  
     output = (individual[:len(person1)], person1)
+    print (output)
     #robot_assignment = (individual[len(person1):], person1)
     total_time_robot1 = 0
     total_time_robot2 = 0
