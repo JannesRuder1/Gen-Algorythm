@@ -5,6 +5,7 @@ import numpy as np
 def generate_individual(person1, person2):
     # Generate a random individual by concatenating two random permutations
     individual1 = random.sample(person1, len(person1))
+    #individual1 = random.sample(range(1, len(person1) + 1), len(person1))  # generate unique tasks for person1
     individual2 = random.sample(person2, len(person2))
     return individual1 + individual2
 
@@ -77,7 +78,7 @@ def genetic_algorithm(person1, person2, safety_distance, process_duration, popul
 
 # Example usage
 person1 = [int(x) for x in '316245'][0:3] + [int(x) for x in '112121'][3:6]  # Bsp. S.39
-person2 = [int(x) for x in '112121'][0:3] + [int(x) for x in '121212'][3:6]  # Bsp. S.39
+person2 = [int(x) for x in '123456'][0:3] + [int(x) for x in '121212'][3:6]  # Bsp. S.39
 safety_distance = 1  # Minimum safety distance
 process_duration = [5, 3, 4, 2, 6, 1]  # Process duration for each task
 number_of_robots = 2  # Number of available robots
