@@ -44,9 +44,9 @@ def fitness(individual, person1, person2, safety_distance, process_duration):
     total_time_robot2 = 0
 
 
-    for i in range(len(output)):
-        station = output[i]
-        print (station)
+    for i, (task, _) in enumerate(zip(output[0], output[1])):
+        station = task
+        #print (station)
         robot = robot_assignment[i]
         if robot == 1:
             total_time_robot1 += processing_times[int (station) - 1]  # subtract 1 because station indices start at 1
