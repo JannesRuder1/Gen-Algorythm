@@ -36,10 +36,9 @@ def fitness(individual, person1, person2, safety_distance, process_duration):
 
     #output = [3, 6, 1, 6, 1, 6]  # task sequence
     robot_assignment = [1, 1, 1, 2, 2, 1]  # robot assignment for each task
-    #sum_diff1 = sum(abs(a - b) for a, b in zip(individual[:len(person1)], person1))
-    #sum_diff2 = sum(abs(a - b) for a, b in zip(individual[len(person1):], person2))
     #offspring1, offspring2 = crossover  
     output = (individual[:len(person1)], person1)
+    #robot_assignment = (individual[len(person1):], person1)
     total_time_robot1 = 0
     total_time_robot2 = 0
 
@@ -65,7 +64,7 @@ def fitness(individual, person1, person2, safety_distance, process_duration):
         else:
             return f'not save {total_processing_time} '
 
-def genetic_algorithm(person1, person2, safety_distance, process_duration, population_size=1000, generations=1000):
+def genetic_algorithm(person1, person2, safety_distance, process_duration, population_size=1000, generations=10000):
     # Run the genetic algorithm
     population = [generate_individual(person1, person2) for _ in range(population_size)]
     for _ in range(generations):
