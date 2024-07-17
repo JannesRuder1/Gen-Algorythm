@@ -59,7 +59,7 @@ def fitness(individual, person1, person2, safety_distance, process_duration):
     else:
         return total_processing_time
 
-def genetic_algorithm(person1, person2, safety_distance, process_duration, population_size=3000, generations=30000):
+def genetic_algorithm(person1, person2, safety_distance, process_duration, population_size=1000, generations=10000):
     # Run the genetic algorithm
     population = [generate_individual(person1, person2) for _ in range(population_size)]
     for _ in range(generations):
