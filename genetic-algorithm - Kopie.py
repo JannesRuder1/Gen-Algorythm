@@ -73,7 +73,7 @@ def genetic_algorithm(person1, person2, safety_distance, process_duration, popul
         fittest_fitness = min(fitness_values)
         print(f'Generation {_+1}: Fittest individual {fittest_individual[:len(person1)]} | {fittest_individual[len(person1):]} with fitness {fittest_fitness}')
         new_population = []
-    # Create a figure and axis for the live graph
+
     plt.clf()
     plt.title("Evolution of Fittest Individual")
     plt.xlabel("Generation")
@@ -97,13 +97,9 @@ def genetic_algorithm(person1, person2, safety_distance, process_duration, popul
         plt.cla()
         plt.plot(x_data, y_data)
         plt.sleep(0.01)  # pause for 10ms to update the graph
+        plt.show(block=False)  # show the plot, but don't block
 
-        new_population = []
-        while len(new_population) < population_size:
-            parent1, parent2 = random.sample(population, 2)
-            offspring1, offspring2 = crossover(parent1, parent2)
-            new_population.extend([mutate_individual(offspring1), mutate_individual(offspring2)])
-        population = new_population
+        # ... (rest of your code remains the same)
 
     plt.show()  # show the final graph
     return fittest_individual, fittest_fitness
