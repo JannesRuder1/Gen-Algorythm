@@ -1,6 +1,6 @@
 import random
 import numpy as np
-import plotext as plt #python -m pip install plotext
+import matplotlib.pyplot as plt
 
 def generate_individual(person1, person2):
     # Generate a random individual by concatenating two random permutations
@@ -64,22 +64,9 @@ def fitness(individual, person1, person2, safety_distance, process_duration):
     else:
         return total_processing_time
 
-def genetic_algorithm(person1, person2, safety_distance, process_duration, population_size=3000, generations=30000):
+def genetic_algorithm(person1, person2, safety_distance, process_duration, population_size=1000, generations=1000):
     # Run the genetic algorithm
     population = [generate_individual(person1, person2) for _ in range(population_size)]
-    for _ in range(generations):
-        fitness_values = [fitness(individual, person1, person2, safety_distance, process_duration) for individual in population]
-        fittest_individual = population[np.argmin(fitness_values)]
-        fittest_fitness = min(fitness_values)
-        print(f'Generation {_+1}: Fittest individual {fittest_individual[:len(person1)]} | {fittest_individual[len(person1):]} with fitness {fittest_fitness}')
-        new_population = []
-
-    plt.clf()
-    plt.title("Evolution of Fittest Individual")
-    plt.xlabel("Generation")
-    plt.ylabel("Fitness")
-
-    # Initialize the x-axis and y-axis data
     x_data = []
     y_data = []
 
@@ -89,17 +76,26 @@ def genetic_algorithm(person1, person2, safety_distance, process_duration, popul
         fittest_fitness = min(fitness_values)
         print(f'Generation {_+1}: Fittest individual {fittest_individual[:len(person1)]} | {fittest_individual[len(person1):]} with fitness {fittest_fitness}')
 
-        # Update the x-axis and y-axis data
         x_data.append(_+1)
         y_data.append(fittest_fitness)
 
-        # Update the graph
         plt.cla()
         plt.plot(x_data, y_data)
-        plt.sleep(0.01)  # pause for 10ms to update the graph
+        plt.title("Evolution of Fittest Individual")
+        plt.xlabel("Generation")
+        plt.ylabel("Fitness")
+        plt.pause(0.01)  # pause for 10ms to update the graph
         plt.show(block=False)  # show the plot, but don't block
 
-        # ... (rest of your code remains the same)
+        # Update the population
+        new_population = []
+        for _ in range(population_size // 2):
+            parent1, parent2 = random.sample(population, 2)
+            offspring1, offspring2 = crossover(parent1, parent2)
+            offspring1 = mutate_individual(offspring1)
+            offspring2 = mutate_individual(offspring2)
+            new_population.extend([offspring1, offspring2])
+        population = new_population
 
     plt.show()  # show the final graph
     return fittest_individual, fittest_fitness
