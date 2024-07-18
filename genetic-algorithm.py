@@ -33,17 +33,19 @@ def fitness(individual, person1, person2, safety_distance, process_duration):
     processing_times = [10, 20, 30, 40, 50, 60]  # example processing times
 
 
-    #output = [3, 6, 1, 6, 1, 6]  # task sequence
-    robot_assignment = [1, 1, 1, 2, 2, 1]  # robot assignment for each task
-    #offspring1, offspring2 = crossover  
-    output = (individual[:len(person1)], person1)
-    print (output)
-    #robot_assignment = (individual[len(person1):], person1)
+    #output = [3, 6, 1, 6, 1, 6]  # taskr  
+    output = individual[:len(person1)]# sequence
+    #robot_assignment = [1, 1, 1, 2, 2, 1]  # robot assignment for each task
+    #offspring1, offspring2 = crossove, person1
+    #print (output)
+    robot_assignment = individual[len(person1):]
     total_time_robot1 = 0
     total_time_robot2 = 0
 
 
-    for i, (task, _) in enumerate(zip(output[0], output[1])):
+    for i, (task, robot) in enumerate(zip(output, robot_assignment)):
+        #print ("robot:" + str(robot))
+        #print ("task:" + str(task))
         station = task
         #print (station)
         robot = robot_assignment[i]
@@ -56,7 +58,7 @@ def fitness(individual, person1, person2, safety_distance, process_duration):
     
     #savety part
     total_processing_time = (total_time_robot1 + total_time_robot2)
-    if len(set(output[0])) != len(output[0]):  # check if there are duplicates
+    if len(set(output)) != len(output):  # check if there are duplicates
         return f'Invalid individual: duplicate task. fitness: {total_processing_time}'
     else:
         return total_processing_time
