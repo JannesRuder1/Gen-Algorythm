@@ -5,8 +5,9 @@ import numpy as np
 def generate_individual(person1, person2):
     # Generate a random individual by concatenating two random permutations
     individual1 = random.sample(person1, len(person1))
-    #individual1 = random.sample(range(1, len(person1) + 1), len(person1))  # generate unique tasks for person1
-    individual2 = random.sample(person2, len(person2))
+    individual2 = random.sample(person2, len(person1))  
+    #print (individual2)
+    #individual2 = [random.choice([1, 2]) for _ in range(len(person2))]
     return individual1 + individual2
 
 def mutate_individual(individual):
@@ -34,11 +35,11 @@ def fitness(individual, person1, person2, safety_distance, process_duration):
 
 
     #output = [3, 6, 1, 6, 1, 6]  # taskr  
-    output = individual[:len(person1)]# sequence
-    #robot_assignment = [1, 1, 1, 2, 2, 1]  # robot assignment for each task
+    output = individual[:len(person1)]
+    #output = [1, 3, 6, 2, 4, 5]
     #offspring1, offspring2 = crossove, person1
     #print (output)
-    robot_assignment = individual[len(person1):]
+    robot_assignment = individual[-len(person2):]
     total_time_robot1 = 0
     total_time_robot2 = 0
 

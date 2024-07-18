@@ -1,12 +1,13 @@
 import random
 import numpy as np
-import matplotlib.pyplot as plt #pip install matplotlib
-
+import plotext as plt #python -m pip install plotext
 
 def generate_individual(person1, person2):
     # Generate a random individual by concatenating two random permutations
     individual1 = random.sample(person1, len(person1))
-    individual2 = random.sample(person2, len(person2))
+    individual2 = random.sample(person2, len(person1))  
+    #print (individual2)
+    #individual2 = [random.choice([1, 2]) for _ in range(len(person2))]
     return individual1 + individual2
 
 def mutate_individual(individual):
@@ -27,26 +28,28 @@ def crossover(parent1, parent2):
 
 
 def fitness(individual, person1, person2, safety_distance, process_duration):
+
     # Check if all safety distances are greater than the minimum safety distance
     travel_time = 5  # example travel time
     processing_times = [10, 20, 30, 40, 50, 60]  # example processing times
 
 
-    #output = [3, 6, 1, 6, 1, 6]  # task sequence
-    robot_assignment = [1, 1, 1, 2, 2, 1]  # robot assignment for each task
-    #offspring1, offspring2 = crossover  
-    output = (individual[:len(person1)], person1)
-    #robot_assignment = (individual[len(person1):], person1)
-    
+    #output = [3, 6, 1, 6, 1, 6]  # taskr  
+    output = individual[:len(person1)]
+    #output = [1, 3, 6, 2, 4, 5]
+    #offspring1, offspring2 = crossove, person1
+    #print (output)
+    robot_assignment = individual[-len(person2):]
     total_time_robot1 = 0
     total_time_robot2 = 0
 
 
-    for i, (task, _) in enumerate(zip(output[0], output[1])):
+    for i, (task, robot) in enumerate(zip(output, robot_assignment)):
+        #print ("robot:" + str(robot))
+        #print ("task:" + str(task))
         station = task
         #print (station)
-        #robot = zip(robot_assignment[0], robot_assignment[1])
-        robot = robot_assignment
+        robot = robot_assignment[i]
         if robot == 1:
             total_time_robot1 += processing_times[int (station) - 1]  # subtract 1 because station indices start at 1
         if i < len(output) - 1 and robot_assignment[i + 1] == 1:
@@ -56,47 +59,60 @@ def fitness(individual, person1, person2, safety_distance, process_duration):
     
     #savety part
     total_processing_time = (total_time_robot1 + total_time_robot2)
-    if len(set(output[0])) != len(output[0]):  # check if there are duplicates
+    if len(set(output)) != len(output):  # check if there are duplicates
         return f'Invalid individual: duplicate task. fitness: {total_processing_time}'
     else:
         return total_processing_time
 
-def genetic_algorithm(person1, person2, safety_distance, process_duration, population_size=1000, generations=10000):
+def genetic_algorithm(person1, person2, safety_distance, process_duration, population_size=3000, generations=30000):
     # Run the genetic algorithm
     population = [generate_individual(person1, person2) for _ in range(population_size)]
-    fitness_values = []
     for _ in range(generations):
-        fitness_values_generation = [fitness(individual, person1, person2, safety_distance, process_duration) for individual in population]
-        fitness_values.extend(fitness_values_generation)
-        fittest_individual = population[np.argmin(fitness_values_generation)]
-        fittest_fitness = min(fitness_values_generation)
+        fitness_values = [fitness(individual, person1, person2, safety_distance, process_duration) for individual in population]
+        fittest_individual = population[np.argmin(fitness_values)]
+        fittest_fitness = min(fitness_values)
         print(f'Generation {_+1}: Fittest individual {fittest_individual[:len(person1)]} | {fittest_individual[len(person1):]} with fitness {fittest_fitness}')
+        new_population = []
+    # Create a figure and axis for the live graph
+    plt.clf()
+    plt.title("Evolution of Fittest Individual")
+    plt.xlabel("Generation")
+    plt.ylabel("Fitness")
+
+    # Initialize the x-axis and y-axis data
+    x_data = []
+    y_data = []
+
+    for _ in range(generations):
+        fitness_values = [fitness(individual, person1, person2, safety_distance, process_duration) for individual in population]
+        fittest_individual = population[np.argmin(fitness_values)]
+        fittest_fitness = min(fitness_values)
+        print(f'Generation {_+1}: Fittest individual {fittest_individual[:len(person1)]} | {fittest_individual[len(person1):]} with fitness {fittest_fitness}')
+
+        # Update the x-axis and y-axis data
+        x_data.append(_+1)
+        y_data.append(fittest_fitness)
+
+        # Update the graph
+        plt.cla()
+        plt.plot(x_data, y_data)
+        plt.sleep(0.01)  # pause for 10ms to update the graph
+
         new_population = []
         while len(new_population) < population_size:
             parent1, parent2 = random.sample(population, 2)
             offspring1, offspring2 = crossover(parent1, parent2)
             new_population.extend([mutate_individual(offspring1), mutate_individual(offspring2)])
         population = new_population
-        
-        # Plot the fitness values
-        plt.clf()
-        plt.plot(fitness_values)
-        plt.xlabel('Generation')
-        plt.ylabel('Fitness')
-        plt.title('Fitness Values Over Generations')
-        plt.pause(0.01)
-    
+
+    plt.show()  # show the final graph
     return fittest_individual, fittest_fitness
 
 # Example usage
 person1 = [int(x) for x in '316245'][0:3] + [int(x) for x in '112121'][3:6]  # Bsp. S.39
-person2 = [int(x) for x in '112121'][0:3] + [int(x) for x in '121212'][3:6]  # Bsp. S.39
+person2 = [int(x) for x in '123456'][0:3] + [int(x) for x in '121212'][3:6]  # Bsp. S.39
 safety_distance = 1  # Minimum safety distance
 process_duration = [5, 3, 4, 2, 6, 1]  # Process duration for each task
 number_of_robots = 2  # Number of available robots
-
-plt.ion()  # Turn on interactive mode
 fittest_individual, fittest_fitness = genetic_algorithm(person1, person2, safety_distance, process_duration)
-plt.ioff()  # Turn off interactive mode
-plt.show()
 print(f'Fittest individual: {fittest_individual[:len(person1)]} | {fittest_individual[len(person1):]} with fitness {fittest_fitness}')
