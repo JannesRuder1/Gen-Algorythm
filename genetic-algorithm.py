@@ -73,16 +73,24 @@ def fitness(individual, person1, person2, safety_distance, process_duration):
 def genetic_algorithm(person1, person2, safety_distance, process_duration, population_size=5000, generations=5000):
     # Run the genetic algorithm
     population = [generate_individual(person1, person2) for _ in range(population_size)]
-    for _ in range(generations):
+    for generation in range(generations):
         fitness_values = [fitness(individual, person1, person2, safety_distance, process_duration) for individual in population]
         fittest_individual = population[np.argmin(fitness_values)]
         fittest_fitness = min(fitness_values)
-        print(f'Generation {_+1}: Fittest individual {fittest_individual[:len(person1)]} | {fittest_individual[len(person1):]} with fitness {fittest_fitness}')
+        print(f'Generation {generation +1}: Fittest individual {fittest_individual[:len(person1)]} | {fittest_individual[len(person1):]} with fitness {fittest_fitness}')
         new_population = []
         while len(new_population) < population_size:
             parent1, parent2 = random.sample(population, 2)
             offspring1, offspring2 = crossover(parent1, parent2)
-            new_population.extend([mutate_individual(offspring1), mutate_individual(offspring2)])
+            if generation % 10 == 0:  # mutate every 10 generations
+                indices = np.argsort(fitness_values)[:2]  # get indices of the two fittest individuals
+                if indices[0] == np.argmin(fitness_values):  # check if the fittest individual is in the new population
+                    new_population.extend([mutate_individual(offspring1), offspring2])
+                else:
+                    new_population.extend([offspring1, offspring2])
+            else:
+                new_population.extend([offspring1, offspring2])
+
         population = new_population
     return fittest_individual, fittest_fitness
 
