@@ -70,7 +70,7 @@ def fitness(individual, person1, person2, safety_distance, process_duration):
     else:
         return total_processing_time
 
-def genetic_algorithm(person1, person2, safety_distance, process_duration, population_size=5000, generations=5000):
+def genetic_algorithm(person1, person2, safety_distance, process_duration, population_size=1000, generations=5000):
     # Run the genetic algorithm
     population = [generate_individual(person1, person2) for _ in range(population_size)]
     for generation in range(generations):
@@ -82,7 +82,7 @@ def genetic_algorithm(person1, person2, safety_distance, process_duration, popul
         while len(new_population) < population_size:
             parent1, parent2 = random.sample(population, 2)
             offspring1, offspring2 = crossover(parent1, parent2)
-            if generation % 10 == 0:  # mutate every 10 generations
+            if generation % 10  == 0:  # mutate every 10 generations
                 indices = np.argsort(fitness_values)[:2]  # get indices of the two fittest individuals
                 if indices[0] == np.argmin(fitness_values):  # check if the fittest individual is in the new population
                     new_population.extend([mutate_individual(offspring1), offspring2])
