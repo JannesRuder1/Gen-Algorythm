@@ -69,25 +69,29 @@ def fitness(individual, person1, person2, safety_distance, process_duration):
     total_processing_time = (total_time_robot1 + total_time_robot2)
     if len(set(output)) != len(output):  # check if there are duplicates
         #return f'Invalid individual: duplicate task. fitness: {total_processing_time}'
-        return total_processing_time
+        return 10000
     else:
         return total_processing_time
 
 def genetic_algorithm(person1, person2, safety_distance, process_duration, population_size=1000, generations=1000):
     # Run the genetic algorithm
     population = [generate_individual(person1, person2) for _ in range(population_size)]
+    fittest_individuals = []
+    fittest_fitness_values = []
     for _ in range(generations):
         fitness_values = [fitness(individual, person1, person2, safety_distance, process_duration) for individual in population]
         fittest_individual = population[np.argmin(fitness_values)]
         fittest_fitness = min(fitness_values)
         print(f'Generation {_+1}: Fittest individual {fittest_individual[:len(person1)]} | {fittest_individual[len(person1):]} with fitness {fittest_fitness}')
+        fittest_individuals.append(fittest_individual)
+        fittest_fitness_values.append(fittest_fitness)
         new_population = []
         while len(new_population) < population_size:
             parent1, parent2 = random.sample(population, 2)
             offspring1, offspring2 = crossover(parent1, parent2)
             new_population.extend([mutate_individual(offspring1), mutate_individual(offspring2)])
         population = new_population
-    return fittest_individual, fittest_fitness
+    return fittest_individuals, fittest_fitness_values
 
 # Example usage
 person1 = [int(x) for x in '316245']#[0:3] + [int(x) for x in '112121'][3:6]  # Bsp. S.39
@@ -95,5 +99,5 @@ person2 = [int(x) for x in '121211'][0:3] + [int(x) for x in '121212'][3:6]  # B
 safety_distance = 1  # Minimum safety distance
 process_duration = [5, 3, 4, 2, 6, 1]  # Process duration for each task
 number_of_robots = 2  # Number of available robots
-fittest_individual, fittest_fitness = genetic_algorithm(person1, person2, safety_distance, process_duration)
-print(f'Fittest individual: {fittest_individual[:len(person1)]} | {fittest_individual[len(person1):]} with fitness {fittest_fitness}')
+fittest_individuals, fittest_fitness_values = genetic_algorithm(person1, person2, safety_distance, process_duration)
+print(f'Fittest individual: {fittest_individuals[:len(person1)]} | {fittest_fitness_values[len(person1):]} with fitness {fittest_fitness}')
