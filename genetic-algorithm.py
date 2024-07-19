@@ -55,21 +55,18 @@ def fitness(individual, person1, person2, safety_distance, process_duration):
         station = task
         if robot == 1:
             total_time_robot1 += processing_times[int(station) - 1]  # subtract 1 because station indices start at 1
-            total_time_robot1 += 5  # add 5 for each task
-            total_time_robot1 += 10  # add 10 for each task individually
+            if i > 0 and robot_assignment[i-1] == 1:
+                total_time_robot1 += abs(station - output[i-1]) * travel_time  # add travel time based on distance to previous station
         elif robot == 2:
             total_time_robot2 += processing_times[int(station) - 1]  # subtract 1 because station indices start at 1
-            total_time_robot2 += 5  # add 5 for each task
-            total_time_robot2 += 10  # add 10 for each task individually
-        if i < len(output) - 1 and robot_assignment[i + 1] == 1:
-            total_time_robot1 += travel_time  # add travel time if not at the last station and next task is also for robot 1
-        elif i < len(output) - 1 and robot_assignment[i + 1] == 2:
-            total_time_robot2 += travel_time  # add travel time if not at the last station and next task is also for robot 2    
+            if i > 0 and robot_assignment[i-1] == 2:
+                total_time_robot2 += abs(station - output[i-1]) * travel_time  # add travel time based on distance to previous station
+
     #savety part
     total_processing_time = (total_time_robot1 + total_time_robot2)
     if len(set(output)) != len(output):  # check if there are duplicates
         #return f'Invalid individual: duplicate task. fitness: {total_processing_time}'
-        return total_processing_time# + 1000000
+        return total_processing_time + 1000000
     else:
         return total_processing_time
 
@@ -90,8 +87,8 @@ def genetic_algorithm(person1, person2, safety_distance, process_duration, popul
     return fittest_individual, fittest_fitness
 
 # Example usage
-person1 = [int(x) for x in '31624785']#[0:3] + [int(x) for x in '112121'][3:6]  # Bsp. S.39
-person2 = [int(x) for x in '12121211'][0:3] + [int(x) for x in '12122212'][3:6]  # Bsp. S.39
+person1 = [int(x) for x in '316245']#[0:3] + [int(x) for x in '112121'][3:6]  # Bsp. S.39
+person2 = [int(x) for x in '121211'][0:3] + [int(x) for x in '121212'][3:6]  # Bsp. S.39
 safety_distance = 1  # Minimum safety distance
 process_duration = [5, 3, 4, 2, 6, 1]  # Process duration for each task
 number_of_robots = 2  # Number of available robots
