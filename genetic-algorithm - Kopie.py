@@ -51,10 +51,16 @@ def fitness(individual, person1, person2, safety_distance, process_duration):
         #print (station)
         #robot = robot_assignment[i]
         if robot == 1:
-            total_time_robot1 += processing_times[int (station) - 1]  # subtract 1 because station indices start at 1
+            total_time_robot1 += processing_times[int(station) - 1]  # subtract 1 because station indices start at 1
+            total_time_robot1 += 5  # add 5 for each task
+            total_time_robot1 += 10  # add 10 for each task individually
+        elif robot == 2:
+            total_time_robot2 += processing_times[int(station) - 1]  # subtract 1 because station indices start at 1
+            total_time_robot2 += 5  # add 5 for each task
+            total_time_robot2 += 10  # add 10 for each task individually
         if i < len(output) - 1 and robot_assignment[i + 1] == 1:
-                total_time_robot1 += travel_time  # add travel time if not at the last station and next task is also for robot 1
-        else:
+            total_time_robot1 += travel_time  # add travel time if not at the last station and next task is also for robot 1
+        elif i < len(output) - 1 and robot_assignment[i + 1] == 2:
             total_time_robot2 += travel_time  # add travel time if not at the last station and next task is also for robot 2
     
     #savety part

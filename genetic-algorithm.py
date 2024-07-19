@@ -8,6 +8,7 @@ def generate_individual(person1, person2):
     individual2 = random.sample(person2, len(person1))  
     #print (individual2)
     #individual2 = [random.choice([1, 2]) for _ in range(len(person2))]
+    #print(individual1 + individual2)
     return individual1 + individual2
 
 def mutate_individual(individual):
@@ -50,21 +51,29 @@ def fitness(individual, person1, person2, safety_distance, process_duration):
         station = task
         #print (station)
         robot = robot_assignment[i]
+    for i, (task, robot) in enumerate(zip(output, robot_assignment)):
+        station = task
         if robot == 1:
-            total_time_robot1 += processing_times[int (station) - 1]  # subtract 1 because station indices start at 1
+            total_time_robot1 += processing_times[int(station) - 1]  # subtract 1 because station indices start at 1
+            total_time_robot1 += 5  # add 5 for each task
+            total_time_robot1 += 10  # add 10 for each task individually
+        elif robot == 2:
+            total_time_robot2 += processing_times[int(station) - 1]  # subtract 1 because station indices start at 1
+            total_time_robot2 += 5  # add 5 for each task
+            total_time_robot2 += 10  # add 10 for each task individually
         if i < len(output) - 1 and robot_assignment[i + 1] == 1:
-                total_time_robot1 += travel_time  # add travel time if not at the last station and next task is also for robot 1
-        else:
-            total_time_robot2 += travel_time  # add travel time if not at the last station and next task is also for robot 2
-    
+            total_time_robot1 += travel_time  # add travel time if not at the last station and next task is also for robot 1
+        elif i < len(output) - 1 and robot_assignment[i + 1] == 2:
+            total_time_robot2 += travel_time  # add travel time if not at the last station and next task is also for robot 2    
     #savety part
     total_processing_time = (total_time_robot1 + total_time_robot2)
     if len(set(output)) != len(output):  # check if there are duplicates
-        return f'Invalid individual: duplicate task. fitness: {total_processing_time}'
+        #return f'Invalid individual: duplicate task. fitness: {total_processing_time}'
+        return total_processing_time
     else:
         return total_processing_time
 
-def genetic_algorithm(person1, person2, safety_distance, process_duration, population_size=30000, generations=30000):
+def genetic_algorithm(person1, person2, safety_distance, process_duration, population_size=1000, generations=1000):
     # Run the genetic algorithm
     population = [generate_individual(person1, person2) for _ in range(population_size)]
     for _ in range(generations):
@@ -81,8 +90,8 @@ def genetic_algorithm(person1, person2, safety_distance, process_duration, popul
     return fittest_individual, fittest_fitness
 
 # Example usage
-person1 = [int(x) for x in '316245'][0:3] + [int(x) for x in '112121'][3:6]  # Bsp. S.39
-person2 = [int(x) for x in '123456'][0:3] + [int(x) for x in '121212'][3:6]  # Bsp. S.39
+person1 = [int(x) for x in '316245']#[0:3] + [int(x) for x in '112121'][3:6]  # Bsp. S.39
+person2 = [int(x) for x in '121211'][0:3] + [int(x) for x in '121212'][3:6]  # Bsp. S.39
 safety_distance = 1  # Minimum safety distance
 process_duration = [5, 3, 4, 2, 6, 1]  # Process duration for each task
 number_of_robots = 2  # Number of available robots
